@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mero portfolio</title>
+</head>
+<body>
+    <style>
+        .container{
+            text-align:center;
+        }
+    </style>
+    <div class="container" id="load"   >
+        <h3>loading...</h3>
+    </div>
+    <div class="container" id ="port" hidden>
+        <img id="image">
+        <h1 id="name">
+        </h1>
+        <h4 id="bios"></h4>
+        <a id="link"> github</a>
+        <a class="twitter-timeline" data-width="400" data-height="600" href="https://twitter.com/witcher01483301?ref_src=twsrc%5Etfw">Tweets by witcher01483301</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"
+    </div>
+    <script>
+        fetch('https://api.github.com/users/prathamshrestha').then(response=>response.json()).then(function(data){
+            document.getElementById('image').src=data["avatar_url"]
+            document.getElementById('name').textContent=data["login"]
+
+            document.getElementById('bios').textContent=data["bio"]
+            document.getElementById('link').href=data["html_url"]
+
+            
+            document.getElementById('port').hidden=false
+            document.getElementById('load').hidden=true     
+        })
+
+
+
+    </script>
+</body>
+</html>
