@@ -63,12 +63,28 @@
             }
         }
         .container{
-            text-align:center;
+            text-align: center;
+            padding: 50px;
         }
-        
+        .twit{
+            text-align:right;
+            height:0;
+        }
+        .bio1{
+            float:left;
+        }
+        .repo{
+            justify-content: center;
+
+        }
+        .reposs{
+            text-align: center;
+            padding-right:30%;
+            height:0;
+        }
     </style>
-    <div class="loading" id="loading"  >
-        <div class="bars"></div>
+    <div class="loading" id="lo"  >
+        <div class="bars" ></div>
         <div class="bars"></div>
         <div class="bars"></div>
         <div class="bars"></div>
@@ -78,14 +94,27 @@
         <div class="bars"></div>
 
     </div>
-    <div class="container" id ="port" hidden>
-        <img id="image">
-        <h1 id="name">
-        </h1>
-        <h4 id="bios"></h4>
-        <a id="link"> github</a>
-        <a class="twitter-timeline" data-width="400" data-height="600" href="https://twitter.com/witcher01483301?ref_src=twsrc%5Etfw">Tweets by witcher01483301</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"
-    </div>
+    <div  id ="port" hidden>
+        <div class="bio1">
+            <img id="image">
+            <h1 id="name">
+            </h1>
+            <h4 id="bios"></h4>
+            <h4 id="repos">  </h4>
+        </div>
+        
+            <div class="reposs">
+              <h1>Here's a list of some of my repos!</h1>
+              <ul id="repo-list" ></ul>
+              <a id="link" class=""> github</a>
+            </div>
+            
+         
+
+
+        
+        <div class="twit"><a class="twitter-timeline" data-width="400" data-height="600" href="https://twitter.com/witcher01483301?ref_src=twsrc%5Etfw">Tweets by witcher</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"
+        </div>  </div>
     <script>
         fetch('https://api.github.com/users/prathamshrestha').then(response=>response.json()).then(function(data){
             document.getElementById('image').src=data["avatar_url"]
@@ -94,10 +123,55 @@
             document.getElementById('bios').textContent=data["bio"]
             document.getElementById('link').href=data["html_url"]
 
+            document.getElementById('repos').textContent=`I have got ${data["public_repos"]} number of repositories`
             
             document.getElementById('port').hidden=false
-            document.getElementById('loading').style.display="none"  
-        })
+
+           
+            document.getElementById('lo').style.display = "none"
+        
+
+
+            })
+
+          //fetch repos
+        fetch("https://api.github.com/users/prathamshrestha/repos")
+        .then(response => response.json())
+        .then(function(repoData){
+        repoData.forEach((repo)=> {
+            console.log(repo.name)
+
+
+    //creating a <li> tag
+    const liNode = document.createElement("li");
+    liNode.classList.add("list-item");
+
+
+    const headingNode = document.createElement("h3");
+    const name = document.createTextNode(repo.name);
+    //adding text to heading
+    headingNode.appendChild(name);
+    
+    //adding text to heading
+    headingNode.appendChild(name);
+
+    
+
+    // append every detail to li tag
+    liNode.appendChild(headingNode);
+    
+
+    // appendChild to the ul tag
+    document.getElementById("repo-list").appendChild(liNode);
+  });
+})
+
+
+            
+     
+
+           
+        
 
 
 
